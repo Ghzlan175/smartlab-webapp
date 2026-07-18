@@ -1,0 +1,8 @@
+.env
+__pycache__/
+*.pyc
+smartlab.db
+uploads/*
+!uploads/.gitkeep
+venv/
+.venv/

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}لوحتي — SmartLab{% endblock %}
+{% block content %}
+
+{% if is_guest %}
+<div class="guest-banner">
+  <span>أنت تستخدم SmartLab كزائر — التحليل يعمل، لكن تقاريرك لن تُحفظ في سجلّ دائم.</span>
+  <a class="btn btn-sm" href="{{ url_for('register') }}">أنشئ حسابًا لحفظ تقاريرك</a>
+</div>
+{% else %}
+<h1>أهلًا، {{ user_name }} 👋</h1>
+<p class="lede">ارفع تقريرًا جديدًا، أو راجع سجلّك السابق.</p>
+{% endif %}
+
+<div class="card" style="margin-bottom:30px;">
+  <img src="{{ url_for('static', filename='images/upload.svg') }}"
+       alt="رفع تقرير"
+       style="max-width:120px; margin:0 auto 16px; display:block;"
+       onerror="this.style.display='none'">
+  <h2>رفع تقرير جديد</h2>
+  <form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data">
+    <label for="report_image">صورة التقرير (JPG / PNG / WEBP)</label>
+    <input type="file" id="report_image" name="report_image" accept="image/*" required>
+    <button class="btn" type="submit">حلّل التقرير</button>
+  </form>
+</div>
+
+{% if not is_guest %}
+<h2>آخر تقاريرك</h2>
+{% if reports %}
+  <ul class="report-list">
+    {% for r in reports[:5] %}
+      <li>
+        <div>
+          <div>{{ r['title'] or '' }}</div>
+          <div class="meta">{{ r['created_at'][:16].replace('T',' ') }}</div>
+        </div>
+        <a class="btn btn-sm btn-ghost" href="{{ url_for('view_report', report_id=r['id']) }}">عرض</a>
+      </li>
+    {% endfor %}
+  </ul>
+  <p class="form-footer"><a href="{{ url_for('history') }}" style="color:var(--teal-deep); font-weight:600;">عرض كل السجل</a></p>
+{% else %}
+  <div class="empty-state">لا توجد تقارير محفوظة بعد. ارفع أول تقرير لك أعلاه.</div>
+{% endif %}
+{% endif %}
+
+{% endblock %}

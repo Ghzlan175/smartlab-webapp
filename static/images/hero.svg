@@ -1,0 +1,24 @@
+<svg width="240" height="220" viewBox="0 0 240 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="120" cy="195" rx="90" ry="14" fill="#E8ECE1"/>
+
+  <!-- phone -->
+  <rect x="35" y="40" width="90" height="150" rx="14" fill="#FFFFFF" stroke="#1F5C4E" stroke-width="3"/>
+  <rect x="47" y="58" width="66" height="100" rx="4" fill="#EAF3EE"/>
+  <line x1="55" y1="72" x2="105" y2="72" stroke="#1F5C4E" stroke-width="3" stroke-linecap="round"/>
+  <line x1="55" y1="86" x2="105" y2="86" stroke="#1F5C4E" stroke-width="3" stroke-linecap="round"/>
+  <line x1="55" y1="100" x2="90" y2="100" stroke="#1F5C4E" stroke-width="3" stroke-linecap="round"/>
+  <line x1="55" y1="122" x2="95" y2="122" stroke="#E8B84B" stroke-width="4" stroke-linecap="round"/>
+  <line x1="55" y1="134" x2="80" y2="134" stroke="#E8B84B" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="80" cy="174" r="4" fill="#1F5C4E"/>
+
+  <!-- magnifier + sparkle (AI analysis) -->
+  <circle cx="165" cy="95" r="30" fill="#FFFFFF" stroke="#1F5C4E" stroke-width="3"/>
+  <circle cx="165" cy="95" r="18" fill="#EAF3EE"/>
+  <line x1="186" y1="116" x2="204" y2="134" stroke="#1F5C4E" stroke-width="6" stroke-linecap="round"/>
+
+  <path d="M162 88 L165 78 L168 88 L178 91 L168 94 L165 104 L162 94 L152 91 Z" fill="#E8B84B"/>
+
+  <!-- small check badge -->
+  <circle cx="60" cy="45" r="16" fill="#E8B84B"/>
+  <path d="M52 45 L58 51 L69 38" stroke="#FFFFFF" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}سجلّي الطبي — SmartLab{% endblock %}
+{% block content %}
+<h1>سجلّي الطبي</h1>
+<p class="lede">كل تقاريرك المحفوظة، مرتبة من الأحدث إلى الأقدم.</p>
+
+{% if reports %}
+  <ul class="report-list">
+    {% for r in reports %}
+      <li>
+        <div>
+          <div>{{ r['title'] or '' }}</div>
+          <div class="meta">{{ r['created_at'][:16].replace('T',' ') }}</div>
+        </div>
+        <a class="btn btn-sm btn-ghost" href="{{ url_for('view_report', report_id=r['id']) }}">عرض</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <div class="empty-state">لا توجد تقارير محفوظة بعد.</div>
+{% endif %}
+{% endblock %}

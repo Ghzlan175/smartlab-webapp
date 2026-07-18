@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}نتيجة التحليل — SmartLab{% endblock %}
+{% block content %}
+<h1>{{ title if title else 'نتيجة التحليل' }}</h1>
+
+{% if saved %}
+  <p class="lede mono">{% if created_at %}{{ created_at[:16].replace('T',' ') }} — {% endif %}تم حفظه في سجلّك.</p>
+{% else %}
+  <p class="lede">لم يتم حفظ هذا التقرير لأنك تستخدم الوضع كزائر.</p>
+{% endif %}
+
+{% if raw_fallback %}
+  <div class="analysis-box">{{ raw_fallback }}</div>
+{% else %}
+
+  {% if summary %}
+  <div class="summary-box">{{ summary }}</div>
+  {% endif %}
+
+  {% if items %}
+  <div class="report-grid">
+    <div class="items-column">
+      {% for item in items %}
+        <div class="result-card status-{{ item.status }}">
+          <div class="result-card-head">
+            <span class="result-name">{{ item.name }}</span>
+            <span class="result-badge badge-{{ item.status }}">
+              {% if item.status == 'high' %}مرتفع{% elif item.status == 'low' %}منخفض{% else %}طبيعي{% endif %}
+            </span>
+          </div>
+          <div class="result-value mono">{{ item.value }} {{ item.unit }}</div>
+          <p class="result-explain">{{ item.explanation }}</p>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="chart-column">
+      <div class="card chart-card">
+        <h2>ملخّص النتائج</h2>
+        <canvas id="resultsChart" width="240" height="240"></canvas>
+        <div class="chart-legend">
+          <span><i class="dot dot-normal"></i> طبيعي ({{ counts.normal }})</span>
+          <span><i class="dot dot-high"></i> مرتفع ({{ counts.high }})</span>
+          <span><i class="dot dot-low"></i> منخفض ({{ counts.low }})</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if tips %}
+  <div class="card tips-card">
+    <h2>نصائح صحية</h2>
+    <ul class="tips-list">
+      {% for tip in tips %}
+        <li>{{ tip }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if disclaimer %}
+  <p class="disclaimer">{{ disclaimer }}</p>
+  {% endif %}
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+  <script>
+    const ctx = document.getElementById('resultsChart');
+    if (ctx) {
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['طبيعي', 'مرتفع', 'منخفض'],
+          datasets: [{
+            data: [{{ counts.normal }}, {{ counts.high }}, {{ counts.low }}],
+            backgroundColor: ['#1F5C4E', '#C75C4A', '#E8B84B'],
+            borderWidth: 0,
+          }]
+        },
+        options: {
+          plugins: { legend: { display: false } },
+          cutout: '65%',
+        }
+      });
+    }
+  </script>
+{% endif %}
+
+{% if saved %}
+<div class="card" style="margin-top:22px;">
+  <h2>إرسال التحليل عبر البريد الإلكتروني</h2>
+  <form method="POST" action="{{ url_for('email_report', report_id=report_id) }}">
+    <label for="email">البريد الإلكتروني المستلم</label>
+    <input type="email" id="email" name="email" required>
+    <button class="btn" type="submit">إرسال</button>
+  </form>
+</div>
+{% endif %}
+
+<p class="form-footer">
+  <a href="{{ url_for('dashboard') }}" style="color:var(--teal-deep); font-weight:600;">⟵ العودة إلى لوحتي</a>
+</p>
+{% endblock %}

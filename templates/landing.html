@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}SmartLab — تقريرك الطبي، بلغتك{% endblock %}
+{% block content %}
+<div class="card" style="text-align:center; max-width:640px; margin:40px auto;">
+  <img src="{{ url_for('static', filename='images/hero.svg') }}"
+       alt="توضيح طبي"
+       style="max-width:220px; margin:0 auto 24px; display:block;"
+       onerror="this.style.display='none'">
+  <h1>تقريرك الطبي معقّد؟</h1>
+  <p class="lede">ارفع صورة تقريرك المخبري، ودع الذكاء الاصطناعي يشرحه لك بلغة بسيطة مع نصائح صحية عملية.</p>
+  <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+    <a class="btn" href="{{ url_for('register') }}">إنشاء حساب</a>
+    <a class="btn btn-ghost" href="{{ url_for('login') }}">تسجيل الدخول</a>
+    <a class="btn btn-ghost" href="{{ url_for('guest') }}">المتابعة كزائر</a>
+  </div>
+</div>
+{% endblock %}
